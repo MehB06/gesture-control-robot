@@ -2,7 +2,7 @@
 
 
 ## Dataset
-Install following dataset into a 'data' folder
+Install dataset into a folder and fix paths
 
 @misc{https://www.kaggle.com/grassknoted/aslalphabet_akash nagaraj_2018,
 title={ASL Alphabet},
