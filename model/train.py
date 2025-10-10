@@ -7,13 +7,12 @@ import logging
 from tqdm import tqdm
 
 from cnn import get_model
-from loader import get_dataloaders
+from loader import testDataLoader, trainDataLoader, validationDataLoader
 from config import (
     IN_CHANNELS, NUM_CLASSES, BASE_CHANNELS, DROPOUT,
     BATCH_SIZE, EPOCHS, LEARNING_RATE, WEIGHT_DECAY, LABEL_SMOOTHING,
     USE_SCHEDULER, MIN_LR,
-    NUM_WORKERS,
-    SAVE_DIR, DATA_DIR
+    SAVE_DIR
 )
 
 logging.basicConfig(
@@ -251,11 +250,6 @@ def main():
     save_dir = Path(SAVE_DIR)
     save_dir.mkdir(parents=True, exist_ok=True)
     
-    train_loader, val_loader, test_loader = get_dataloaders(
-        batch_size=BATCH_SIZE,
-        num_workers=NUM_WORKERS,
-        data_dir=DATA_DIR
-    )
     
     model = build_model(device)
     criterion = build_criterion()
@@ -264,9 +258,9 @@ def main():
     
     trainer = Trainer(
         model=model,
-        train_loader=train_loader,
-        val_loader=val_loader,
-        test_loader=test_loader,
+        train_loader=trainDataLoader,
+        val_loader=validationDataLoader,
+        test_loader=testDataLoader,
         criterion=criterion,
         optimizer=optimizer,
         scheduler=scheduler,

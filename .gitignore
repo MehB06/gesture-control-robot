@@ -1,4 +1,4 @@
 *venv
-*data
+*data/raw
 *.ipynb
 *__pycache__
