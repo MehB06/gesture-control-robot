@@ -22,5 +22,5 @@ VALIDATE_PERCENT = 0.15
 TEST_PERCENT = 0.15
 
 # Paths
-SAVE_DIR = 'checkpoints'
-DATA_DIR = 'data/'
+SAVE_DIR = 'data/saves/'
+DATA_DIR = 'data/raw/'

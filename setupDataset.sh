@@ -2,6 +2,7 @@
 
 # This program downloads and setsup the ASL Alphabet Dataset from Kaggle
 
+cd "$(pwd)"
 
 # Permission to execute .sh file
 echo "
@@ -34,41 +35,40 @@ if [ -d "data/raw" ]; then
             echo "aborting Download"
             exit 0
         else
-            rm -f data/raw
+            rm -rf data/raw/*
     fi
 fi
 mkdir -p data/raw
 
 
 # Download using cURL
-echo "Downlaing ASL Alphabet dataset..."
-curl -L -o ~/Downloads/asl-alphabet.zip\
+echo "Downloading ASL Alphabet dataset..."
+curl -L -o asl-alphabet.zip\
     https://www.kaggle.com/api/v1/datasets/download/grassknoted/asl-alphabet
 echo "Dataset downloaded."
 echo ""
 
 # Extracting data and copying relevent data to the 'data/raw' directory
 echo "Extracting Data..."
-unzip -q asl-alphabet.zip
+unzip -q asl-alphabet.zip -d temp/
 echo "Dataset extracted."
 
-if [ -d "asl_alphabet_train/asl_alphabet_train" ]; 
+if [ -d "temp/asl_alphabet_train/asl_alphabet_train" ]; 
 
     then
         echo "Moving data to correct directory..."
-        mv asl_alphabet_train/asl_alphabet_train/* data/raw/
+        mv temp/asl_alphabet_train/asl_alphabet_train/* data/raw/
         echo "Complete moving."
 
     else
         echo "Something when wrong... Aborting"
-        rm -f data/raw/
+        rm -rf data/raw/*
+        rm -rf temp/
         exit 0
 fi
 echo ""
 
 echo "Cleaning up..."
 rm -f asl-alphabet.zip
-rm -f asl-aphabet
+rm -rf temp/
 echo "Setup Complete!"
-
-

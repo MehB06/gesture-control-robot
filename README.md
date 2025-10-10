@@ -3,7 +3,9 @@
 ## Dataset
 
 Once you have cloned the repository, you can download and set up the dataset using the setup script:
+Run the following commands in a terminal in the repositories' directory.
 
+The '.../gesture-control-robot/' path
 ```bash
 chmod +x setupDataset.sh
 ./setupDataset.sh
