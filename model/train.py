@@ -176,13 +176,13 @@ class Trainer:
         logger.info(f'Loaded checkpoint from {checkpoint_path}')
         return checkpoint
     
-    def train(self, num_epochs: int):
-        logger.info(f'Starting training for {num_epochs} epochs')
+    def train(self):
+        logger.info(f'Starting training for {EPOCHS} epochs')
         logger.info(f'Device: {self.device}')
         logger.info(f'Model parameters: {sum(p.numel() for p in self.model.parameters()):,}')
         
-        for epoch in range(num_epochs):
-            logger.info(f'\nEpoch [{epoch + 1}/{num_epochs}]')
+        for epoch in range(EPOCHS):
+            logger.info(f'\nEpoch [{epoch + 1}/{EPOCHS}]')
             
             train_loss, train_acc = self.train_epoch()
             val_loss, val_acc = self.validate()
@@ -274,7 +274,7 @@ def main():
         save_dir=save_dir
     )
     
-    trainer.train(EPOCHS)
+    trainer.train()
     
     logger.info('\nEvaluating on test set...')
     best_checkpoint_path = save_dir / 'best_checkpoint.pth'
