@@ -7,14 +7,21 @@ import logging
 from tqdm import tqdm
 
 from cnn import get_model
-from loader import trainDataLoader, validationDataLoader, testDataLoader  # Assuming these are directly available
-from config import BATCH_SIZE, EPOCHS, TRAIN_PERCENT, TEST_PERCENT, VALIDATE_PERCENT
+from loader import get_dataloaders
+from config import (
+    IN_CHANNELS, NUM_CLASSES, BASE_CHANNELS, DROPOUT,
+    BATCH_SIZE, EPOCHS, LEARNING_RATE, WEIGHT_DECAY, LABEL_SMOOTHING,
+    USE_SCHEDULER, MIN_LR,
+    NUM_WORKERS,
+    SAVE_DIR, DATA_DIR
+)
 
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
 
 class Trainer:
     def __init__(
@@ -46,7 +53,7 @@ class Trainer:
             'val_loss': [],
             'val_acc': []
         }
-
+    
     def train_epoch(self) -> Tuple[float, float]:
         self.model.train()
         running_loss = 0.0
@@ -80,7 +87,7 @@ class Trainer:
         epoch_acc = 100.0 * correct / total
         
         return epoch_loss, epoch_acc
-
+    
     def validate(self) -> Tuple[float, float]:
         self.model.eval()
         running_loss = 0.0
@@ -110,7 +117,7 @@ class Trainer:
         epoch_acc = 100.0 * correct / total
         
         return epoch_loss, epoch_acc
-
+    
     def test(self) -> Tuple[float, float]:
         self.model.eval()
         running_loss = 0.0
@@ -140,7 +147,7 @@ class Trainer:
         test_acc = 100.0 * correct / total
         
         return test_loss, test_acc
-
+    
     def save_checkpoint(self, epoch: int, val_loss: float, val_acc: float, is_best: bool = False):
         checkpoint = {
             'epoch': epoch,
@@ -159,7 +166,7 @@ class Trainer:
             best_path = self.save_dir / 'best_checkpoint.pth'
             torch.save(checkpoint, best_path)
             logger.info(f'Saved best model with validation accuracy: {val_acc:.2f}%')
-
+    
     def load_checkpoint(self, checkpoint_path: Path):
         checkpoint = torch.load(checkpoint_path, map_location=self.device)
         self.model.load_state_dict(checkpoint['model_state_dict'])
@@ -168,7 +175,7 @@ class Trainer:
             self.scheduler.load_state_dict(checkpoint['scheduler_state_dict'])
         logger.info(f'Loaded checkpoint from {checkpoint_path}')
         return checkpoint
-
+    
     def train(self, num_epochs: int):
         logger.info(f'Starting training for {num_epochs} epochs')
         logger.info(f'Device: {self.device}')
@@ -205,43 +212,50 @@ class Trainer:
 
 def build_model(device: torch.device) -> nn.Module:
     model = get_model(
-        in_channels=3,
-        num_classes=29,
-        base_channels=32,
-        dropout=0.3
+        in_channels=IN_CHANNELS,
+        num_classes=NUM_CLASSES,
+        base_channels=BASE_CHANNELS,
+        dropout=DROPOUT
     )
     return model.to(device)
 
 
 def build_criterion() -> nn.Module:
-    return nn.CrossEntropyLoss()
+    return nn.CrossEntropyLoss(
+        label_smoothing=LABEL_SMOOTHING
+    )
 
 
 def build_optimizer(model: nn.Module) -> torch.optim.Optimizer:
     return torch.optim.AdamW(
         model.parameters(),
-        lr=0.001,
-        weight_decay=0.01
+        lr=LEARNING_RATE,
+        weight_decay=WEIGHT_DECAY
     )
 
 
 def build_scheduler(optimizer: torch.optim.Optimizer) -> torch.optim.lr_scheduler._LRScheduler:
+    if not USE_SCHEDULER:
+        return None
+    
     return torch.optim.lr_scheduler.CosineAnnealingLR(
         optimizer,
-        T_max=50,
-        eta_min=1e-6
+        T_max=EPOCHS,
+        eta_min=MIN_LR
     )
 
 
 def main():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     
-    save_dir = Path('checkpoints')
+    save_dir = Path(SAVE_DIR)
     save_dir.mkdir(parents=True, exist_ok=True)
     
-    train_loader = trainDataLoader
-    val_loader = validationDataLoader
-    test_loader = testDataLoader
+    train_loader, val_loader, test_loader = get_dataloaders(
+        batch_size=BATCH_SIZE,
+        num_workers=NUM_WORKERS,
+        data_dir=DATA_DIR
+    )
     
     model = build_model(device)
     criterion = build_criterion()
@@ -260,8 +274,7 @@ def main():
         save_dir=save_dir
     )
     
-    num_epochs = 50
-    trainer.train(num_epochs)
+    trainer.train(EPOCHS)
     
     logger.info('\nEvaluating on test set...')
     best_checkpoint_path = save_dir / 'best_checkpoint.pth'
