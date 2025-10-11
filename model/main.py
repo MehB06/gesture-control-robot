@@ -2,7 +2,7 @@ import torch
 from pathlib import Path
 import logging
 
-from config import SAVE_DIR
+from config import SAVE_DIR, BEST_CHECKPOINT
 from loader import trainDataLoader, validationDataLoader, testDataLoader
 from train import (
     Trainer,
@@ -45,7 +45,7 @@ def main():
     trainer.train()
 
     logger.info('\nEvaluating on test set...')
-    best_checkpoint_path = save_dir / 'best_checkpoint.pth'
+    best_checkpoint_path = save_dir / BEST_CHECKPOINT
     if best_checkpoint_path.exists():
         trainer.load_checkpoint(best_checkpoint_path)
 

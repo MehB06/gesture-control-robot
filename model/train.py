@@ -7,12 +7,12 @@ import logging
 from tqdm import tqdm
 
 from cnn import get_model
-from loader import testDataLoader, trainDataLoader, validationDataLoader
 from config import (
     IN_CHANNELS, NUM_CLASSES, BASE_CHANNELS, DROPOUT,
     BATCH_SIZE, EPOCHS, LEARNING_RATE, WEIGHT_DECAY, LABEL_SMOOTHING,
     USE_SCHEDULER, MIN_LR,
-    SAVE_DIR
+    SAVE_DIR,
+    LAST_CHECKPOINT, BEST_CHECKPOINT
 )
 
 logging.basicConfig(
@@ -158,11 +158,11 @@ class Trainer:
             'history': self.history
         }
         
-        checkpoint_path = self.save_dir / 'last_checkpoint.pth'
+        checkpoint_path = self.save_dir / LAST_CHECKPOINT
         torch.save(checkpoint, checkpoint_path)
         
         if is_best:
-            best_path = self.save_dir / 'best_checkpoint.pth'
+            best_path = self.save_dir / BEST_CHECKPOINT
             torch.save(checkpoint, best_path)
             logger.info(f'Saved best model with validation accuracy: {val_acc:.2f}%')
     
