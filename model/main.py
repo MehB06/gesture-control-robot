@@ -20,11 +20,13 @@ logger = logging.getLogger(__name__)
 
 
 def main():
+    # Make global variable
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     save_dir = Path(SAVE_DIR)
     save_dir.mkdir(parents=True, exist_ok=True)
 
+    # Move to train.py (redundent code)
     model = build_model(device)
     criterion = build_criterion()
     optimizer = build_optimizer(model)

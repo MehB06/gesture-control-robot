@@ -12,6 +12,8 @@ transformation = transforms.Compose([
 
 dataset = datasets.ImageFolder(root=DATA_DIR, transform=transformation)
 
+print(dataset.classes)
+
 trainSize = int(len(dataset)*TRAIN_PERCENT)
 testSize = int(len(dataset)*TEST_PERCENT)
 valSize = int (len(dataset) - (trainSize + testSize))

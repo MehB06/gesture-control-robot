@@ -25,13 +25,13 @@ logger = logging.getLogger(__name__)
 class Trainer:
     def __init__(
         self,
-        model: nn.Module,
+        model: nn.Module,               #
         train_loader: DataLoader,
         val_loader: DataLoader,
         test_loader: DataLoader,
-        criterion: nn.Module,
-        optimizer: torch.optim.Optimizer,
-        scheduler: torch.optim.lr_scheduler._LRScheduler,
+        criterion: nn.Module,           #
+        optimizer: torch.optim.Optimizer,#
+        scheduler: torch.optim.lr_scheduler._LRScheduler, #
         device: torch.device,
         save_dir: Path
     ):
