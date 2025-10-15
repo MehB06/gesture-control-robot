@@ -5,7 +5,7 @@ from model.config import SAVE_DIR, BEST_CHECKPOINT
 from model.loader import trainDataLoader, validationDataLoader, testDataLoader
 from model.train import Trainer
 
-from model.imageCapture import ASLDectector
+from model.imageCapture import ASLDetector
 
 logging.basicConfig(
     level=logging.INFO,
@@ -19,7 +19,8 @@ def main():
     save_dir.mkdir(parents=True, exist_ok=True)
 
     if (save_dir / BEST_CHECKPOINT).exists():
-        stream = ASLDectector(save_dir=save_dir)
+        logger.info("Loading ASL Detector UI.")
+        stream = ASLDetector(save_dir=save_dir)
     else:
         logger.info("Training new model as saved not found...")
     

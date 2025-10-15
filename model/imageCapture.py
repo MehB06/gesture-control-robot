@@ -10,7 +10,7 @@ from .cnn import CNN
 # Model Loading
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-class ASLDectector():
+class ASLDetector():
     def __init__(self,save_dir):
         # Loading Model
         self.__model = self.__getModel(save_dir)
@@ -30,8 +30,10 @@ class ASLDectector():
         # Camera Capture
         self.videoCam = cv2.VideoCapture(0)
         self.SAMPLE_RATE = 0.3
+
+        self.run()
     
-    def detectFrames(self):
+    def run(self):
         lastSampleTime = 0
         prediction = ""
         while True:
@@ -40,7 +42,7 @@ class ASLDectector():
                 break
 
             if (time.time() - lastSampleTime) > self.SAMPLE_RATE:
-                self.lastSampleTime - time.time()
+                lastSampleTime - time.time()
 
                 pil_frame = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
                 inputTensor = self.transformation(pil_frame).unsqueeze(0).to(device)
