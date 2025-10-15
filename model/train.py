@@ -7,6 +7,7 @@ import logging
 from tqdm import tqdm
 
 from .cnn import get_model
+from .loader import DataProcessor
 from .config import (
     IN_CHANNELS, NUM_CLASSES, BASE_CHANNELS, DROPOUT,
     EPOCHS, LEARNING_RATE, WEIGHT_DECAY, LABEL_SMOOTHING,
@@ -22,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class Trainer:
-    def __init__(self, train_loader: DataLoader, val_loader: DataLoader, test_loader: DataLoader, save_dir: Path):
+    def __init__(self, save_dir: Path):
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
         self.model = build_model(self.model)
@@ -31,9 +32,7 @@ class Trainer:
         self.scheduler = build_scheduler(self.optimizer)
 
         self.save_dir = save_dir
-        self.train_loader = train_loader
-        self.val_loader = val_loader
-        self.test_loader = test_loader
+        self.train_loader, self.val_loader, self.test_loader = DataProcessor().getDataLoaders()
         
         self.best_val_acc = 0.0
         self.history = {

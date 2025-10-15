@@ -2,7 +2,6 @@ from pathlib import Path
 import logging
 
 from model.config import SAVE_DIR, BEST_CHECKPOINT
-from model.loader import trainDataLoader, validationDataLoader, testDataLoader
 from model.train import Trainer
 
 from model.imageCapture import ASLDetector
@@ -25,12 +24,7 @@ def main():
         logger.info("Training new model as saved not found...")
     
 
-        trainer = Trainer(
-            train_loader=trainDataLoader,
-            val_loader=validationDataLoader,
-            test_loader=testDataLoader,
-            save_dir=save_dir
-        )
+        trainer = Trainer(save_dir)
 
         trainer.train()
 
