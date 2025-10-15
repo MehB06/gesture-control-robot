@@ -29,27 +29,34 @@ This project focuses on the use of **computer vision with pytorch** and **roboti
  - Pytorch
  - ROS2
  - Git
- - 
+ - Bash (shell scipting)
 
 ## Setup
 ### Prequisites:
- - Linux 
+ - Linux (for utilisation with ROS)
  - Working Webcam
 
 ### Basic: 
 1. Fork repo
 2. Clone Repo
+  ```bash
+  git clone <your-forked-repository-url>
+  ```
 3. Create venv and source
   ```bash
-  python3 -m venv venv
-  source venv/bin/activate
-
-  python3 -m pip install --upgrade pip
-  pip install -r requirements.txt
+  python3 -m venv venv      # Creates the virtual environment (venv)
+  source venv/bin/activate  # Activates the venv
+  ```
+4. (inside venv) Import from requirements.txt
+  ```bash
+  python3 -m pip install --upgrade pip  # Updates 
+  pip install -r requirements.txt       # Installs relevent imports
 
   ```
-4. import from requirements.txt
-5. run 'python run main'
+5. To run the Program, within the project root folder:
+  ```bash
+  python3 main.py # Runs the program (ensure your inside the venv and in the root dir.)
+  ```
 
 ### Additional: 
 1. Follow setup as described in Basic
@@ -64,8 +71,8 @@ If you wish to setup the Dataset, inorder to retrain or play around with the mod
 ### OPTION 1: AUTOMATED
 Within the root directory of your project folder run the following:
 ```bash
-chmod +x setupDataset.sh
-./setupDataset.sh
+chmod +x setupDataset.sh  # Ensures the file can run 
+./setupDataset.sh         # Runs the file (this may take a minute or 2)
 ```
 
 The script will automatically download, extract, and organize the ASL Alphabet dataset into the `data/` directory.
@@ -78,8 +85,7 @@ The script will automatically download, extract, and organize the ASL Alphabet d
 4. Delete the .zip and remaining extracted files
 
 ## Citations
-
-
+### DataSet
 ```bibtex
 @misc{nagaraj2018asl,
   title={ASL Alphabet},
