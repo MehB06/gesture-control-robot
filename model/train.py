@@ -2,16 +2,15 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from pathlib import Path
-from typing import Dict, Tuple
+from typing import Tuple
 import logging
 from tqdm import tqdm
 
-from cnn import get_model
-from config import (
+from .cnn import get_model
+from .config import (
     IN_CHANNELS, NUM_CLASSES, BASE_CHANNELS, DROPOUT,
-    BATCH_SIZE, EPOCHS, LEARNING_RATE, WEIGHT_DECAY, LABEL_SMOOTHING,
+    EPOCHS, LEARNING_RATE, WEIGHT_DECAY, LABEL_SMOOTHING,
     USE_SCHEDULER, MIN_LR,
-    SAVE_DIR,
     LAST_CHECKPOINT, BEST_CHECKPOINT
 )
 
@@ -23,27 +22,18 @@ logger = logging.getLogger(__name__)
 
 
 class Trainer:
-    def __init__(
-        self,
-        model: nn.Module,               #
-        train_loader: DataLoader,
-        val_loader: DataLoader,
-        test_loader: DataLoader,
-        criterion: nn.Module,           #
-        optimizer: torch.optim.Optimizer,#
-        scheduler: torch.optim.lr_scheduler._LRScheduler, #
-        device: torch.device,
-        save_dir: Path
-    ):
-        self.model = model
+    def __init__(self, train_loader: DataLoader, val_loader: DataLoader, test_loader: DataLoader, save_dir: Path):
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+        self.model = build_model(self.model)
+        self.criterion = build_criterion()
+        self.optimizer = build_optimizer(self.model)
+        self.scheduler = build_scheduler(self.optimizer)
+
+        self.save_dir = save_dir
         self.train_loader = train_loader
         self.val_loader = val_loader
         self.test_loader = test_loader
-        self.criterion = criterion
-        self.optimizer = optimizer
-        self.scheduler = scheduler
-        self.device = device
-        self.save_dir = save_dir
         
         self.best_val_acc = 0.0
         self.history = {

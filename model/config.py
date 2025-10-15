@@ -1,5 +1,3 @@
-# Create __init__.py which contains the model
-
 # Model Parameters
 IN_CHANNELS = 3
 NUM_CLASSES = 29

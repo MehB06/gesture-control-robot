@@ -1,63 +1,74 @@
 import cv2
 import torch
 import time
-from cnn import CNN 
 from torchvision import transforms
 from PIL import Image
+
+from .config import LAST_CHECKPOINT
+from .cnn import CNN 
 
 # Model Loading
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-model = CNN()
-model.to(device)
+class ASLDectector():
+    def __init__(self,save_dir):
+        # Loading Model
+        self.__model = self.__getModel(save_dir)
 
-checkpoint = torch.load("data/saves/last_checkpoint.pth", map_location=device)  # adjust path to your file
-model.load_state_dict(checkpoint['model_state_dict'])
-model.eval()
-
-# Classes
-labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+        # Classification lables
+        self.labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
           "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
           "del", "nothing", "space"]
+        
+        # Process Frame
+        self.transformation = transforms.Compose([
+            transforms.Resize((200, 200)),       # 200 x 200 Pixels
+            transforms.ToTensor(),               # Convert to tensor
+            transforms.Normalize((0.5,), (0.5,)) # Normalize between -1 and 1
+        ])
 
+        # Camera Capture
+        self.videoCam = cv2.VideoCapture(0)
+        self.SAMPLE_RATE = 0.3
+    
+    def detectFrames(self):
+        lastSampleTime = 0
+        prediction = ""
+        while True:
+            ret, frame = self.videoCam.read()
+            if not ret:
+                break
 
-# Process Frame
-transformation = transforms.Compose([
-    transforms.Resize((200, 200)),       # 200 x 200 Pixels
-    transforms.ToTensor(),               # Convert to tensor
-    transforms.Normalize((0.5,), (0.5,)) # Normalize between -1 and 1
-])
+            if (time.time() - lastSampleTime) > self.SAMPLE_RATE:
+                self.lastSampleTime - time.time()
 
-# Camara capture 
-videoCam = cv2.VideoCapture(0)
-lastSampleTime = 0
-sampleRate = 0.3  # seconds
-prediction = ""
+                pil_frame = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+                inputTensor = self.transformation(pil_frame).unsqueeze(0).to(device)
 
-while True:
-    ret, frame = videoCam.read()
-    if not ret:
-        break
+                with torch.no_grad():
+                    outputs = self.__model(inputTensor)
+                    predictionIndex = torch.argmax(outputs, dim=1).item()
+                    prediction = self.labels[predictionIndex]
 
-    if (time.time() - lastSampleTime) > sampleRate:
-        lastSampleTime - time.time()
+            # Image Feedback
+            cv2.putText(frame, f"Prediction: {prediction}", (20, 50),
+                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+            cv2.imshow("ASL Live Feed", frame)
 
-        pil_frame = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-        inputTensor = transformation(pil_frame).unsqueeze(0).to(device)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
 
-        with torch.no_grad():
-            outputs = model(inputTensor)
-            predictionIndex = torch.argmax(outputs, dim=1).item()
-            prediction = labels[predictionIndex]
+        self.videoCam.release()
+        cv2.destroyAllWindows()
 
-    # Image Feedback
-    cv2.putText(frame, f"Prediction: {prediction}", (20, 50),
-                cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-    cv2.imshow("ASL Live Feed", frame)
+            
+    def __getModel(self,save_dir):
+        model = CNN()
+        model.to(device)
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-
-videoCam.release()
-cv2.destroyAllWindows()
+        checkpoint_path = save_dir / LAST_CHECKPOINT
+        checkpoint = torch.load(checkpoint_path, map_location=device)  # adjust path to your file
+        model.load_state_dict(checkpoint['model_state_dict'])
+        model.eval()
+        
+        return model

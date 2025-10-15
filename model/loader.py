@@ -2,7 +2,7 @@ import torch
 from torch.utils.data import DataLoader, random_split
 from torchvision import datasets, transforms
 
-from config import BATCH_SIZE, TEST_PERCENT, TRAIN_PERCENT, NUM_WORKERS, DATA_DIR
+from .config import BATCH_SIZE, TEST_PERCENT, TRAIN_PERCENT, NUM_WORKERS, DATA_DIR
 
 transformation = transforms.Compose([
     transforms.Resize((200, 200)),       # 200 x 200 Pixels

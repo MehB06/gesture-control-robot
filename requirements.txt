@@ -1,0 +1,9 @@
+# Pytorch
+torch
+torchvision
+
+# Camera Streaming
+opencv-python
+
+# Visualising Progress
+tdqm
