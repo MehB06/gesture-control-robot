@@ -6,7 +6,7 @@
 /home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/install/robotic_arm_gazebo/share/robotic_arm_gazebo/package.xml
 /home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/install/robotic_arm_gazebo/share/robotic_arm_gazebo/urdf/robotic_arm.urdf.xacro
 /home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/install/robotic_arm_gazebo/share/robotic_arm_gazebo/meshes
-/home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/install/robotic_arm_gazebo/share/robotic_arm_gazebo/launch/spawn_robot.launch
+/home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/install/robotic_arm_gazebo/share/robotic_arm_gazebo/launch/spawn_robot.launch.py
 /home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/install/robotic_arm_gazebo/lib/python3.12/site-packages/robotic_arm_gazebo-0.0.0-py3.12.egg-info/SOURCES.txt
 /home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/install/robotic_arm_gazebo/lib/python3.12/site-packages/robotic_arm_gazebo-0.0.0-py3.12.egg-info/zip-safe
 /home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/install/robotic_arm_gazebo/lib/python3.12/site-packages/robotic_arm_gazebo-0.0.0-py3.12.egg-info/requires.txt

@@ -1,0 +1,23 @@
+[2.083s] Invoking command in '/home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/src/robotic_arm_gazebo': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/build/robotic_arm_gazebo/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/install/robotic_arm_gazebo/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/robotic_arm_gazebo build --build-base /home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/build/robotic_arm_gazebo/build install --record /home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/build/robotic_arm_gazebo/install.log --single-version-externally-managed install_data
+[2.740s] running egg_info
+[2.786s] writing ../../build/robotic_arm_gazebo/robotic_arm_gazebo.egg-info/PKG-INFO
+[2.787s] writing dependency_links to ../../build/robotic_arm_gazebo/robotic_arm_gazebo.egg-info/dependency_links.txt
+[2.788s] writing entry points to ../../build/robotic_arm_gazebo/robotic_arm_gazebo.egg-info/entry_points.txt
+[2.789s] writing requirements to ../../build/robotic_arm_gazebo/robotic_arm_gazebo.egg-info/requires.txt
+[2.789s] writing top-level names to ../../build/robotic_arm_gazebo/robotic_arm_gazebo.egg-info/top_level.txt
+[2.909s] reading manifest file '../../build/robotic_arm_gazebo/robotic_arm_gazebo.egg-info/SOURCES.txt'
+[2.911s] writing manifest file '../../build/robotic_arm_gazebo/robotic_arm_gazebo.egg-info/SOURCES.txt'
+[2.911s] running build
+[2.911s] running build_py
+[2.916s] running install
+[2.931s] running install_lib
+[2.988s] running install_data
+[2.990s] copying urdf/robotic_arm.urdf.xacro -> /home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/install/robotic_arm_gazebo/share/robotic_arm_gazebo/urdf
+[2.992s] copying launch/spawn_robot.launch.py -> /home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/install/robotic_arm_gazebo/share/robotic_arm_gazebo/launch
+[2.995s] running install_egg_info
+[3.062s] removing '/home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/install/robotic_arm_gazebo/lib/python3.12/site-packages/robotic_arm_gazebo-0.0.0-py3.12.egg-info' (and everything under it)
+[3.062s] Copying ../../build/robotic_arm_gazebo/robotic_arm_gazebo.egg-info to /home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/install/robotic_arm_gazebo/lib/python3.12/site-packages/robotic_arm_gazebo-0.0.0-py3.12.egg-info
+[3.065s] running install_scripts
+[3.452s] Installing control_node script to /home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/install/robotic_arm_gazebo/lib/robotic_arm_gazebo
+[3.454s] writing list of installed files to '/home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/build/robotic_arm_gazebo/install.log'
+[3.544s] Invoked command in '/home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/src/robotic_arm_gazebo' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/build/robotic_arm_gazebo/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/install/robotic_arm_gazebo/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/robotic_arm_gazebo build --build-base /home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/build/robotic_arm_gazebo/build install --record /home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/build/robotic_arm_gazebo/install.log --single-version-externally-managed install_data

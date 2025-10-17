@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="robotic_arm">
-  <xacro:property name="pi" value="3.14159265359"/>
+  <!-- Note: xacro already provides mathematical constants like pi; avoid redefining to prevent stderr warnings. -->
 
   <!-- Colors -->
   <material name="gray"><color rgba="0.7 0.7 0.7 1.0"/></material>

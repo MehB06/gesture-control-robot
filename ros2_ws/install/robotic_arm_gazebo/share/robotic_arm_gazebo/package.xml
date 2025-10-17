@@ -5,16 +5,17 @@
   <version>0.0.0</version>
   <description>ROS2 package for a robotic arm sim in gazebo</description>
   <maintainer email="fadimostefai@gmail.com">fadi</maintainer>
-  <license>Apache Licence 2.0</license>
+  <license>Apache License 2.0</license>
 
   <buildtool_depend>ament_python</buildtool_depend>
-  
+
   <depend>rclpy</depend>
-  <depend>gazebo_ros</depend>
-  <depend>ros2_control</depend>
   <depend>xacro</depend>
-  <depend>joint_state_publisher_gui</depend>
   <depend>robot_state_publisher</depend>
+  <depend>ros_gz_sim</depend>
+  <!-- optional if you add controllers later -->
+  <depend>ros2_control</depend>
+  <depend>joint_state_publisher_gui</depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

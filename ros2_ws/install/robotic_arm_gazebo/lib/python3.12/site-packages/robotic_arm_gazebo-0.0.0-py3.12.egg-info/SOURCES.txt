@@ -8,7 +8,7 @@ setup.py
 ../../build/robotic_arm_gazebo/robotic_arm_gazebo.egg-info/requires.txt
 ../../build/robotic_arm_gazebo/robotic_arm_gazebo.egg-info/top_level.txt
 ../../build/robotic_arm_gazebo/robotic_arm_gazebo.egg-info/zip-safe
-launch/spawn_robot.launch
+launch/spawn_robot.launch.py
 resource/robotic_arm_gazebo
 robotic_arm_gazebo/__init__.py
 robotic_arm_gazebo/control_node.py
