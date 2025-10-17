@@ -20,6 +20,7 @@ This project focuses on the use of **computer vision with pytorch** and **roboti
 ## Features
 - [x] Real-time ASL alphabeth detection
 - [x] Modular architecture for easier development, debugging and collaboration.
+- [ ] Create and train model for segmentation of hand to improve identifiation. 
 - [ ] A ROS2 based Gazebo model for action visualisation of the robot
 - [ ] Ability to adapt and retrain the model for testing and experimention.
 - [ ] Ability to remap ASL inputs to ROS2 actions 

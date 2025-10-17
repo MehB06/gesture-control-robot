@@ -7,10 +7,13 @@ from .config import BATCH_SIZE, TEST_PERCENT, TRAIN_PERCENT, NUM_WORKERS, DATA_D
 class DataProcessor:
     def __init__(self):
         
-        self.transformation = transforms.Compose([
-            transforms.Resize((200, 200)),       # 200 x 200 Pixels
-            transforms.ToTensor(),               # Convert to tensor
-            transforms.Normalize((0.5,), (0.5,)) # Normalize between -1 and 1
+        self.transformation = transforms.Compose([     
+            transforms.ToPILImage(),
+            transforms.Resize((200,200)),
+            transforms.RandomAffine(degrees=15, translate=(0.1,0.1), scale=(0.8,1.2)),
+            transforms.Grayscale(num_output_channels=1),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.5], std=[0.5])
         ])
 
         self.dataset = datasets.ImageFolder(root=DATA_DIR, transform=self.transformation)

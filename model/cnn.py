@@ -16,7 +16,7 @@ class CNN(nn.Module):
     """
 
     
-    def __init__(self, in_channels=3, num_classes=29, base_channels=32, dropout=0.3):
+    def __init__(self, in_channels=1, num_classes=29, base_channels=32, dropout=0.3):
         super().__init__()
         # Number of channels for each block (progressively doubling)
         c1, c2, c3, c4, c5 = base_channels, base_channels*2, base_channels*4, base_channels*8, base_channels*8
