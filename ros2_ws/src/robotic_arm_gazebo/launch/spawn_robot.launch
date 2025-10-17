@@ -1,0 +1,37 @@
+# filepath: /home/fadi/Documents/RoboticArmProject/gesture-control-robot/ros2_ws/src/robotic_arm_gazebo/launch/spawn_robot.launch.py
+from launch import LaunchDescription
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import Command, FindExecutable
+from launch_ros.substitutions import FindPackageShare
+from launch_ros.actions import Node
+import os
+
+def generate_launch_description():
+    pkg_share = FindPackageShare('robotic_arm_gazebo').find('robotic_arm_gazebo')
+    urdf_path = os.path.join(pkg_share, 'urdf', 'robotic_arm.urdf.xacro')
+
+    robot_description = {'robot_description': Command([FindExecutable(name='xacro'), ' ', urdf_path])}
+
+    gazebo_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(FindPackageShare('gazebo_ros').find('gazebo_ros'), 'launch', 'gazebo.launch.py')
+        )
+    )
+
+    rsp = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        name='robot_state_publisher',
+        output='screen',
+        parameters=[robot_description],
+    )
+
+    spawner = Node(
+        package='gazebo_ros',
+        executable='spawn_entity.py',
+        arguments=['-entity', 'robotic_arm', '-topic', 'robot_description'],
+        output='screen'
+    )
+
+    return LaunchDescription([gazebo_launch, rsp, spawner])

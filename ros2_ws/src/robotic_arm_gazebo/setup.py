@@ -30,7 +30,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'control_node = robotic_arm_gazebo.control_node\:main',
+            'control_node = robotic_arm_gazebo.control_node:main',
         ],
     },
 )
