@@ -122,7 +122,7 @@ class CNN(nn.Module):
         return x
 
 
-def get_model(in_channels=3, num_classes=29, base_channels=32, dropout=0.3):
+def get_model(in_channels=1, num_classes=29, base_channels=32, dropout=0.3):
     """
     Helper function to create an instance of the CNN model with specified parameters.
     Args:

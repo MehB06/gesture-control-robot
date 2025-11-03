@@ -26,7 +26,7 @@ class Trainer:
     def __init__(self, save_dir: Path):
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-        self.model = build_model(self.model)
+        self.model = build_model(self.device)
         self.criterion = build_criterion()
         self.optimizer = build_optimizer(self.model)
         self.scheduler = build_scheduler(self.optimizer)
