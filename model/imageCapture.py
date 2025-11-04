@@ -21,8 +21,7 @@ class ASLDetector():
           "del", "nothing", "space"]
         
         # Process Frame
-        self.transformation = transforms.Compose([     
-            transforms.ToPILImage(),
+        self.transformation = transforms.Compose([
             transforms.Resize((200,200)),
             transforms.RandomAffine(degrees=15, translate=(0.1,0.1), scale=(0.8,1.2)),
             transforms.Grayscale(num_output_channels=1),
